@@ -1,0 +1,229 @@
+Tasks
+
+Code should be written only using pure JavaScript (EcmaScript 5). No additional libraries are allowed. Obviously, if the tasks tells you to
+
+implement "forEach" method, you should not use the native "forEach" method in the implementation.
+
+Function
+
+Create a simple Function module that contains methods described below.
+
+All methods of the Function module are pure functions (no side effects). Values passed to the functions are never modified!
+
+Solution should be provided in a single JavaScript file, named "function.js". All functions should be exported as a valid NodeJS module.
+
+Module example
+
+module.exports = {
+
+ partial: function () {},
+
+ memoize: function () {}
+
+ //...
+
+};
+
+Partial Application
+Implement function partial that takes a n-arrity function and returns a function that an be called with the number of arguments that is smaller than
+
+n. In such case it returns a new function that can take the rest of arguments. Example:
+
+var add = partial(function (a, b, c, d) { return a + b + c + d });
+
+add(1)(2, 3)(4); // 10
+
+// OR
+
+var temp1 = add(1, 2);
+
+var temp2 = temp1(3);
+
+var res = temp2(4);
+
+res; //10
+
+
+
+Compose
+Implement function compose that takes two single parameter functions as parameters and returns a function that is right-to-left composition of that
+
+functions. (Bonus: extend to any number of parameters). Example:
+
+function add2 (x) { return x + 2 }
+
+function square(x) { return x * x }
+
+var add2AndSquare = compose(square, add2)
+
+add2AndSquare(2) // output: 16
+
+
+Memoize
+Implement function memoize that takes a function and returns a function that memorizes results of a given function. It should work for various
+types of arguments. Example:
+
+var memoized = memoize(function (arg) {
+ console.log('Function executed');
+ if(arg.test) {
+    return arg.test;
+ }
+ else {
+    return arg + 1;
+ }
+
+});
+
+memoized(1); // Returns: 2 Console: Function executed
+memoized(1); // Returns: 2
+
+memoized(4); // Returns: 5 Console: Function executed
+memoized(4); // Returns: 5
+
+memoized({test: 1}); // Returns: 1 Console: Function executed
+memoized({test: 1}); // Returns: 1
+
+perfectMemoize
+Implement function perfectMemoize that takes a function and returns a function that memorizes results of a given function. It should work for various
+types of arguments, it should work with references. Example:
+
+var memoized = perfectMemoize(function (arg) {
+ console.log('Function executed');
+ if(arg.test) {
+    return arg.test;
+ }
+ else {
+    return arg + 1;
+ }
+
+});
+var obj = {test: 2};
+
+memoized(1); // Returns: 2 Console: Function executed
+memoized(1); // Returns: 2
+
+
+memoized({test: 1}); // Returns: 1 Console: Function executed
+memoized({test: 1}); // Returns: 1 Console: Function executed
+
+memoized(obj); // Returns: 2 Console: Function executed
+memoized(obj); // Returns: 2
+
+
+
+
+
+Tasks
+Code should be written only using pure JavaScript (EcmaScript 5). No additional libraries are allowed. Obviously, if the tasks tells you to
+
+implement "forEach" method, you should not use the native "forEach" method in the implementation.
+
+
+Collection
+Create a simple Collection module that contains methods described below.
+
+All methods of the Collection module are pure functions (no side effects). Values passed to the functions are never modified! All functions should
+
+work on arrays.
+
+Solution should be provided in a single JavaScript file, named "collection.js". All functions should be exported as a valid NodeJS module.
+
+Module example
+
+module.exports = {
+
+ create: function () {},
+
+ forEach: function () {}
+
+ //...
+
+};
+
+create
+"create" will take two arguments: number of elements and generator function. It should return a new array, with elements created by calling given
+generator on each index. Example:
+
+Module example
+
+var newArr = create(5, function (index) {
+ return index + 5;
+});
+
+newArr; // [5, 6, 7, 8, 9]
+
+map
+Creates an array of values by running each element in original array through callback. The callback is bound to optional context argument and
+invoked with three arguments: (value, index, collection).
+
+Module example
+
+var arr = [1, 2, 3, 4, 5];
+
+var newArray = map(arr, function (value, index, array) {
+
+ return value * 2;
+
+});
+
+newArray; //[2, 4, 6, 8, 10]
+
+every
+Checks if callback returns truthy for all elements of collection. The predicate is bound to optional third argument and invoked with three
+arguments:
+(value, index, collection).
+
+Module example
+
+function isBig(creature) {
+ //... return true or false
+}
+
+var arr = ['elephant', 'wale', 'yo mama'];
+var res = every(arr, isBig);
+res; //true
+
+
+none
+Checks if callback returns falsy for all elements of collection. The predicate is bound to optional third argument and invoked with three
+arguments:
+(value, index, collection).
+
+Module example
+function isCool(lang) {
+ return lang === 'JS';
+}
+
+var arr = ['php', 'Java', 'Kobol', 'C#'];
+var res = none(arr, isCool);
+res; //true
+
+
+unique
+Creates a duplicate-free version of an array. If a callback function is provided it’s invoked for each element in the array to generate the criterion by
+which uniqueness is computed. The callback is bound to optional context argument and invoked with three arguments: (value, index, array).
+
+Module example
+var arr = [1, 2, 2.5, 4, 4, 5, 5, 1.1];
+context = {
+    number: 1
+}
+
+var newArr = uniq(arr, function (value, index, array) {
+ return Math.floor(value) + this.number;
+}, context);
+
+
+newArr; //[2,4,5,6]
+
+
+
+add
+Creates a new array with values appended to the original collection. Multiple appended values can be provided as additional arguments.
+Module example
+
+var epicBands = ['Metallica', 'Queen', 'Nirvana'];
+var newArray = add(epicBands, 'Black Sabbath', 'Slayer', 'Iron Maiden');
+epicBands; //['Metallica', 'Queen', 'Nirvana']
+newArray; // ['Metallica', 'Queen', 'Nirvana', 'Black Sabbath', 'Slayer', 'Iron Maiden']
+
